@@ -235,9 +235,9 @@ async function seedDefaultData() {
     // Create sample asset categories
     let assetCategories = await storage.getAssetCategories(defaultTenant.id);
     if (assetCategories.length === 0) {
-      await storage.createAssetCategory({ name: "Computer", description: "PCs und Laptops", assetType: "hardware", tenantId: defaultTenant.id });
-      await storage.createAssetCategory({ name: "Drucker", description: "Drucker und Scanner", assetType: "hardware", tenantId: defaultTenant.id });
-      await storage.createAssetCategory({ name: "Software", description: "Software-Lizenzen", assetType: "software", tenantId: defaultTenant.id });
+      await storage.createAssetCategory({ name: "Computer", description: "PCs und Laptops", assetType: "hardware", tenantId: defaultTenant.id }, defaultTenant.id);
+      await storage.createAssetCategory({ name: "Drucker", description: "Drucker und Scanner", assetType: "hardware", tenantId: defaultTenant.id }, defaultTenant.id);
+      await storage.createAssetCategory({ name: "Software", description: "Software-Lizenzen", assetType: "software", tenantId: defaultTenant.id }, defaultTenant.id);
       assetCategories = await storage.getAssetCategories(defaultTenant.id);
     }
 
