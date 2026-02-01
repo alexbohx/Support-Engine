@@ -3390,7 +3390,7 @@ export async function registerRoutes(
   app.post("/api/exchange/configuration", authMiddleware, adminMiddleware, async (req: AuthenticatedRequest, res) => {
     try {
       const { ExchangeService } = await import("./exchange-service");
-      const tenantId = req.user!.tenantId;
+      const tenantId = req.user!.tenantId!;
       const { clientId, tenantAzureId, authType, clientSecret, certificatePem, certificateThumbprint, isEnabled } = req.body;
       
       let existingConfig = await storage.getExchangeConfiguration(tenantId);
@@ -3433,7 +3433,7 @@ export async function registerRoutes(
   app.post("/api/exchange/test-connection", authMiddleware, adminMiddleware, async (req: AuthenticatedRequest, res) => {
     try {
       const { ExchangeService, ExchangeError } = await import("./exchange-service");
-      const tenantId = req.user!.tenantId;
+      const tenantId = req.user!.tenantId!;
       const config = await storage.getExchangeConfiguration(tenantId);
       
       if (!config) {
@@ -3478,7 +3478,7 @@ export async function registerRoutes(
   // Get Exchange mailboxes
   app.get("/api/exchange/mailboxes", authMiddleware, adminMiddleware, async (req: AuthenticatedRequest, res) => {
     try {
-      const mailboxes = await storage.getExchangeMailboxes(req.user!.tenantId);
+      const mailboxes = await storage.getExchangeMailboxes(req.user!.tenantId!);
       res.json(mailboxes);
     } catch (error) {
       logger.error("exchange", "Fehler beim Abrufen der Postfächer", { description: String(error), cause: "Datenbankfehler", solution: "Überprüfen Sie die Datenbankverbindung" });
